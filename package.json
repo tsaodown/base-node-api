@@ -1,0 +1,41 @@
+{
+  "name": "@tsaodown/base-node-api",
+  "version": "0.1.0",
+  "description": "Base API built on Node",
+  "main": "index.js",
+  "engines": {
+    "node": "7.4.*"
+  },
+  "scripts": {
+    "start": "if [ -z ${NODE_ENV} ] || [ \"$NODE_ENV\" = \"development\" ] ; then nodemon ; else node index.js ; fi",
+    "debug": "node debug index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "validate": "npm ls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/tsaodown/base-node-api.git"
+  },
+  "author": "Edd Tsao",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@tsaodown/base-node": "^0.1.0"
+  },
+  "pre-commit": [
+    "lint",
+    "validate"
+  ],
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.13.1",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-config-standard-flow": "^1.0.1",
+    "eslint-plugin-ava": "^4.0.1",
+    "eslint-plugin-flowtype": "^2.29.2",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "nodemon": "^1.11.0",
+    "precommit-hook-eslint": "^3.0.0"
+  }
+}

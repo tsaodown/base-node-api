@@ -1,0 +1,18 @@
+{
+  "env": {
+    "node": "true"
+  },
+  "plugins": [
+    "flowtype",
+    "ava"
+  ],
+  "extends": [
+    "standard",
+    "standard-flow",
+    "plugin:flowtype/recommended",
+    "plugin:ava/recommended"
+  ],
+  "rules": {
+    "no-console": "off"
+  }
+}
