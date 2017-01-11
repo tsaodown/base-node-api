@@ -1,8 +1,11 @@
 // @flow
 'use strict'
 
-let server = require('@tsaodown/base-node')
+let passport = require('passport')
 
-server.get('/', (req, res) => {
-  res.json('yeah!')
-})
+let server = require('@tsaodown/base-node')
+require('./passport.config')
+
+server.use(passport.initialize())
+
+server.use('/auth', require('./components/auth'))
