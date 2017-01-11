@@ -5,5 +5,8 @@ module.exports = {
   },
   logging: {
     format: 'dev'
+  },
+  jwt: {
+    secret: 'puppies'
   }
 }
