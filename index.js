@@ -3,15 +3,14 @@
 
 let passport = require('passport')
 
+let auth = require('./components/auth')
 let server = require('@tsaodown/base-node')
 
 server.use(passport.initialize())
 
-server.use('/auth', require('./components/auth'))
+server.use('/auth', auth)
 
-server.post('/', passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+server.post('/', auth.authJWT, (req, res) => {
   console.log(req.user)
   res.json('testage')
 })

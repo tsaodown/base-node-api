@@ -1,16 +1,15 @@
 // @flow
 
 let jwt = require('jwt-simple')
-let passport = require('passport')
+let router = require('express').Router()
+
+let authLocal = require('./index').authLocal
 
 let conf = require('config')
 
-let router = require('express').Router()
-
 router.post('/login',
-  passport.authenticate('local', {
-    session: false
-  }), (req, res) => {
+  authLocal,
+  (req, res) => {
     let token = jwt.encode({
       id: 1
     }, conf.get('jwt.secret'))
