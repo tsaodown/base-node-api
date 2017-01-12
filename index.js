@@ -8,9 +8,4 @@ let server = require('@tsaodown/base-node')
 
 server.use(passport.initialize())
 
-server.use('/auth', auth)
-
-server.post('/', auth.authJWT, (req, res) => {
-  console.log(req.user)
-  res.json('testage')
-})
+server.use(auth)

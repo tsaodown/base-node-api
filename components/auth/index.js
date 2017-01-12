@@ -16,7 +16,16 @@ passport.use(new LocalStrategy((username, password, done) => {
 
 passport.use(new JWTStrategy({
   secretOrKey: conf.get('jwt.secret'),
-  jwtFromRequest: JWTExtract.fromBodyField('token')
+  jwtFromRequest: (req) => {
+    var token = JWTExtract.fromBodyField('token')(req)
+    if (token === null) {
+      token = JWTExtract.fromAuthHeader()(req)
+    }
+    if (token === null) {
+      token = JWTExtract.fromHeader('token')(req)
+    }
+    return token
+  }
 }, (payload, done) => {
   return done(null, payload)
 }))

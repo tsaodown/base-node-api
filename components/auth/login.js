@@ -7,7 +7,7 @@ let authLocal = require('./index').authLocal
 
 let conf = require('config')
 
-router.post('/login',
+router.post('/token',
   authLocal,
   (req, res) => {
     let token = jwt.encode({
