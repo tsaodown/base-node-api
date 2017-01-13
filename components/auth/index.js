@@ -1,43 +1,21 @@
 // @flow
 
-let passport = require('passport')
-let LocalStrategy = require('passport-local').Strategy
-let JWTStrategy = require('passport-jwt').Strategy
-let JWTExtract = require('passport-jwt').ExtractJwt
-let router = require('express').Router()
+import { Router } from 'express'
 
-let conf = require('config')
+import Passport from './passport.config'
 
-passport.use(new LocalStrategy((username, password, done) => {
-  return done(null, {
-    name: 'Bob'
-  })
-}))
+import Login from './login'
 
-passport.use(new JWTStrategy({
-  secretOrKey: conf.get('jwt.secret'),
-  jwtFromRequest: (req) => {
-    var token = JWTExtract.fromBodyField('token')(req)
-    if (token === null) {
-      token = JWTExtract.fromAuthHeader()(req)
-    }
-    if (token === null) {
-      token = JWTExtract.fromHeader('token')(req)
-    }
-    return token
+import { LoginBacking } from '../../index'
+
+export default class Auth {
+  router = null
+
+  constructor (lb: LoginBacking) {
+    const passport = new Passport(lb)
+
+    this.router = Router()
+
+    this.router.use(new Login(passport).router)
   }
-}, (payload, done) => {
-  return done(null, payload)
-}))
-
-module.exports = router
-
-module.exports.authLocal = passport.authenticate('local', {
-  session: false
-})
-
-module.exports.authJWT = passport.authenticate('jwt', {
-  session: false
-})
-
-router.use(require('./login'))
+}

@@ -1,11 +1,23 @@
 // @flow
 'use strict'
 
-let passport = require('passport')
+import passport from 'passport'
 
-let auth = require('./components/auth')
-let server = require('@tsaodown/base-node')
+import Auth from './components/auth'
+import server from '@tsaodown/base-node'
 
-server.use(passport.initialize())
+export class LoginBacking {
+  x: number
+}
 
-server.use(auth)
+export default class API {
+  server = server
+  lb: LoginBacking
+
+  constructor (lb: LoginBacking) {
+    this.lb = lb
+    server.use(passport.initialize())
+
+    server.use(new Auth(lb).router)
+  }
+}

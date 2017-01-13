@@ -1,23 +1,29 @@
 // @flow
 
-let jwt = require('jwt-simple')
-let router = require('express').Router()
+import conf from 'config'
+import jwt from 'jwt-simple'
 
-let authLocal = require('./index').authLocal
+import { Router } from 'express'
 
-let conf = require('config')
+import Passport from './passport.config'
 
-router.post('/token',
-  authLocal,
-  (req, res) => {
-    let token = jwt.encode({
-      id: 1
-    }, conf.get('jwt.secret'))
-    res.json({
-      user: 'test',
-      token: token
-    })
+export default class Login {
+  router = null
+
+  constructor (p: Passport) {
+    this.router = Router()
+
+    this.router.post('/token',
+      p.local,
+      (req, res) => {
+        let token = jwt.encode({
+          id: 1
+        }, conf.get('jwt.secret'))
+        res.json({
+          user: 'test',
+          token: token
+        })
+      }
+    )
   }
-)
-
-module.exports = router
+}
