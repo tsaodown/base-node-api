@@ -6,8 +6,8 @@ import passport from 'passport'
 import Auth from './components/auth'
 import server from '@tsaodown/base-node'
 
-export class LoginBacking {
-  x: number
+export interface LoginBacking {
+  getUser(uuid: string): Object
 }
 
 export default class API {
